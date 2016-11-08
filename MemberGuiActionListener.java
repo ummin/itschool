@@ -122,7 +122,7 @@ public class MemberGuiActionListener implements  ActionListener {
 			confirmchk = false;
 		}
 		if(name.getText().equals("") || name.getText() == null ){
-			message += "이름를입력하시오 \n";
+			message += "이름를입력하시 \n";
 		}
 		if ( !message.equals("  입력시 체크 사항 \n\n  ")){
 			JOptionPane.showMessageDialog(id, message);
