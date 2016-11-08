@@ -76,7 +76,7 @@ public class MemberGuiActionListener implements  ActionListener {
 		
 		if(btntxt.equals("중복검사")){
 			if(id.getText().equals("")){
-				JOptionPane.showMessageDialog(id, "id를입력하세요");
+				JOptionPane.showMessageDialog(id, "id를입력하세");
 				return;
 			}
 			boolean findid = confirmchk();
