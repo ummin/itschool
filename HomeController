@@ -1,0 +1,114 @@
+package com.naver.kus;
+
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.naver.kus.entities.Member;
+import com.naver.kus.service.MemberDao;
+
+/**
+ * Handles requests for the application home page.
+ */
+@Controller
+public class HomeController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
+	@Autowired
+	private SqlSession sqlSession;
+	/**
+	 * Simply selects the home view to render by returning its name.
+	 */
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String root(Locale locale, Model model) {
+		
+		return "redirect:/home";
+	}
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	public String home(Locale locale, Model model) {
+		
+		return "layout/body";
+	}
+	@RequestMapping(value = "/memberInsertForm", method = RequestMethod.GET)
+	public String memberInsertForm() {
+		return "member/member_insert";
+	}
+	@RequestMapping(value = "/idconfirm", method = RequestMethod.POST)
+	@ResponseBody
+	public int idconfirm(@RequestParam() String id){
+		int count = 0;
+		try {
+			MemberDao dao = sqlSession.getMapper(MemberDao.class);
+			count = dao.selectCount(id);
+		} catch (Exception e) {
+			System.out.println("error : "+e.getMessage());
+		}
+		return count;
+	}
+	@RequestMapping(value = "/memberInsert", method = RequestMethod.POST)
+	public ModelAndView memberInsert(@ModelAttribute("member") Member member){
+		MemberDao dao = sqlSession.getMapper(MemberDao.class);
+		int result = dao.insertMember(member);
+		ModelAndView mav = new ModelAndView("member/member_result");
+		mav.addObject("result","회원가입이 완료되었습니다.");
+		
+		return mav;
+	}
+	@RequestMapping(value = "/memberUpdateForm", method = RequestMethod.GET)
+	public ModelAndView memberUpdate(@RequestParam String id, HttpServletResponse response, HttpServletRequest request) throws Exception{
+		MemberDao dao = sqlSession.getMapper(MemberDao.class);
+		Member member = dao.selectOne(id);
+		ModelAndView mav = new ModelAndView("member/member_update_form");
+		mav.addObject("member", member);
+		return mav;
+	}
+	@RequestMapping(value = "/memberUpdate", method = RequestMethod.POST)
+	public ModelAndView memberUpdateForm(@ModelAttribute("member") Member member) {
+		MemberDao dao = sqlSession.getMapper(MemberDao.class);
+		int result = dao.updateRow(member);
+		ModelAndView mav = new ModelAndView("member/member_result");
+		mav.addObject("result", "ok");
+		return mav;
+	}
+	@RequestMapping(value = "/memberDeleteYn", method = RequestMethod.GET)
+	public ModelAndView memberDeleteYn(@RequestParam String id) {
+		MemberDao dao = sqlSession.getMapper(MemberDao.class);
+		ModelAndView mav = new ModelAndView("member/member_result_yn");
+		mav.addObject("id", id);
+		return mav;
+	}
+	@RequestMapping(value = "/memberDelete", method = RequestMethod.POST)
+	public ModelAndView memberDelete(@RequestParam String id, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		MemberDao dao = sqlSession.getMapper(MemberDao.class);
+		int result = dao.deleteOne(id);
+		ModelAndView mav = new ModelAndView("member/member_result");
+		mav.addObject("result", "ok");
+		String msg="";
+		if(result>0){
+			msg = "Success! Deleted your Info";
+			session.invalidate();
+		}
+		else
+			msg = "Failed! your Information";
+		mav.addObject("msg", msg);
+		return mav;
+	}
+	
+}
