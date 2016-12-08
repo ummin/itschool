@@ -1,0 +1,23 @@
+@CHARSET "UTF-8";
+.div-bgcolor-red{
+	font-family:cursive;
+	background: #ff0000;
+}
+.div-bgcolor-green{
+	font-family:cursive;
+	background: #00ff00;
+}
+.div-bgcolor-blue{
+	font-family:fantasy;
+	background: #0000ff;
+}
+.div-bgcolor-white{
+	background: #ffffff;
+	font-size:50px;
+}
+.div-bgcolor-black{
+	background: #000000;
+}
+.down-icon{
+	font-size:50px;
+}

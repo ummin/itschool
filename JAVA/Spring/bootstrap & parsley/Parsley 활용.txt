@@ -1,0 +1,27 @@
+<input name="id" id="id" class="form-control" text="text" size="16" placeholder="ID"
+               required="" data-parsley-error-message="please insert your ID" data-parsley-errors-container="div[id='validateId']" />
+               <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" id="confirm" >Confirm</button>
+               </span>
+            </div>
+            <div id="validateId" style="color:#ff0000"></div>
+            <br>
+
+            <div class="input-group">
+               <span class="input-group-addon"><i class="fa fa-unlock-alt" aria-hidden="true"></i></span>
+               <input name="password" id="password" class="form-control" type="password" size="16" placeholder="PASSWORD"
+                 required="true" data-parsley-error-message="please insert your Password" data-parsley-errors-container="div[id='validatePassword']"
+                />
+            </div>
+
+             <div id="validatePassword" style="color:#ff0000"></div>
+            <div class="input-group">
+
+               <span class="input-group-addon"><i class="fa fa-unlock-alt" aria-hidden="true"></i></span>
+               <input name="repassword" class="form-control" id="repassword" type="password" size="16" placeholder="REPASSWORD"
+                 required="true" data-parsley-error-message="Please check your Password and Repassword"
+                 data-parsley-equalto="#password"
+                 data-parsley-errors-container="div[id='validateRePassword']"
+                />
+            </div>
+             <div id="validateRePassword" style="color:#ff0000"></div>

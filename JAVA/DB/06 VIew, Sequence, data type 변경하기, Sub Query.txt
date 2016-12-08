@@ -1,0 +1,86 @@
+select sido,dong from zipcode where rownum < 500; -> 499개의 데이터를 보여줌
+
+view---------------------------------------------------------------------------
+
+1. system 계정으로 grant create view to java; -> java에게 view 생성 권한을 부여.
+
+2. create view viewstudent as select studentno,name from student; -> view 생성
+ 
+3. select *from viewstudnet; --> view 확인.
+
+★ 다른공간에 물리적으로 존재하지 않는다. 테이블과 같은공간에서 참조할뿐이다.
+
+※ update viewstudent set name='ki' where name='ki'; -> view 수정.
+
+★ select 는 정보를 보는 개념이 아니다. 정보를 가져오는 개념이다. view는 단지 보여주기용.
+
+※ drop view viewstudent;
+
+※ create view viewstudent as select studentno,name from student
+   with read only;-> 오직 읽기전용으로 (되도록 view 는 read only 로 저장한다.)
+
+Table ← view : 테이블이 바뀌면 view도 바뀐다 ( 같은 공간이니까)
+
+--------------------------------------------------------------------------------------
+
+data 가 있는 field 에 type 변경하기 
+문자 type 에 숫자는 그냥 들어가지만 숫자 type에 문자가 들어가지 않는다.
+
+1.update set zipcode roadecode=null; -> 변겅할 field 에 null값 주기.
+
+2.alter table zipcode modify roadecode number(30); -> type 수정해주기.
+
+3.alter table zipcode add temp varchar2(30); -> 데이터를 넣어줄 temp field 생성
+
+4.update zipcode set temp=rownum;
+
+5.update zipcode set roadecode=to_number(temp) -> temp 필드의 문자값들을 순자로 변환해서 
+                                                  roadcode에 저장.
+
+select roadcode,temp from zipcode where rownum <500;
+
+update zipcode set temp=roadcode; 
+
+※ primary key 를 선언하여 간단하게 데이터를 불러와야한다.
+
+※ sequence -> 파일을 순차적으로 불러오는것. 관리하기가 힘들다 파일이 따로 있기 때문에.
+
+
+update zipcode set temp=to_char(roadcode); 숫자를 문자로 바꾸는 함수.
+
+-------------------------------------------------------------------------------------
+Sequence
+
+create sequence student_seq minvalue 1 maxvalue 999999999999999
+increment by 1 start with 1; -> 1부터 시작해서 1씩 더하는 sequence 생성
+
+select sequence_name from user_sequences -> sequence 확인
+
+drop sequence student_seq;
+
+alter table student add seq number(11);
+
+insert into student(seq,studentno,name) values
+(student_seq.nextval,'21212001','송강호');
+
+select seq,studentno,name from student;
+
+중간 번호를 삭제하면 다시 중간번호를 끼우면 안된다.
+(다시 시퀀스를 생성해야한다.)
+새로생성해도 그 다음 숫자부터 생성된다.
+-----------------------------------------------------------------------------
+※( Sub Query 활용 ) sequence 기능과같은함수.
+insert into student(seq,studentno,name) values
+( (select max(seq)+1 from student) ,'3030','Morata');
+
+
+select zipcodeseq, sido, dong from zipcode
+where zipcodeseq between 100 and 200;
+
+select sido, roadcode from zipcode
+where zipcodeseq = 200 or zipcodeseq = 300 or zipcodeseq = 400;
+
+select sido,roadcode from zipcode
+where zipcodeseq in (200,300,400);
+
+concat 활용하여 주소 합치기

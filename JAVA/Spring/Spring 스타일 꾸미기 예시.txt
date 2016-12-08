@@ -1,0 +1,16 @@
+<style>
+.resultPage{
+	font-size:35px;
+	text-align: center !important;
+	margin-top: 50px;
+
+.resultMessage{
+	margin-top:20px;
+        font-size=25px;
+        background-color:#e0e0d1;
+        text-align:center !important; (가운데정렬)
+        line-height: 250px;
+        padding : 15px; (정 중앙 정렬)
+}
+</style>
+}

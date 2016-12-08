@@ -1,0 +1,11 @@
+Spring에서 DB를 다루는 방식
+
+iBitis 
+
+MyBitis (거의쓴다.)
+
+Hibermate
+
+
+웹페이상에서 GUI 처럼 페이지를 동적으로 구현하기 어렵다. -> JavaScript 가 그 기능을 구현
+                                                         Ajax 가 등장.(Server 와 통신할 때 사용)

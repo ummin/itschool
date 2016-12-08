@@ -1,0 +1,108 @@
+select *from tab; --> 휴지통에 있는 테이블까지 모두 출력
+
+select table_name from user_tables; ----> 현재 사용하고 있는 테이블 출력
+
+< Primary Key >
+
+alter table student add primary key(studentno);
+
+-----------------------------------------------------------------------
+이름이 중복 될 경우 원하는 칸만 삭제할때
+select rowid,name from student; -> 각 row 의 코드확인
+
+delete student rowid where rowid ='삭제하고싶은 row' -> 대소문자 구별
+-----------------------------------------------------------------------
+desc student 확인
+
+atler table student drop primary key; --> primary key 삭제
+
+* NULL 값이 있을경우 Primarykey 입력 불가능
+
+insert into student(studentno,name) values(null,'널확인'); -->Null값입력
+
+delete student studentno where studentno is null; -->Null 값 삭제
+
+
+--------------------------------------------------------------------------
+유저의 제약 사항들을 표시
+select constraint_name,constrain_tpyy from user_constraints;
+
+select constraint_name,constraint_type,table_name,status
+
+from user_constraints;
+-------------------------------------------------------------------------
+Unique ->Primary key 대용
+not null 을 허용 하지 않는다 , 중복데이터는 사용 불가.
+
+alter table student add unique(name);
+alter table student modify name varchar2(20) not null; -> not null 허용
+                                                        primary 키와 동일   
+
+* Not null 제거 방법 - > Not Null 값에 Null 값을 준다.
+
+★ primary, unique 키 ( 값, 값) 묶을 경우 두개 모두 지정된다.
+
+-----------------------------------------------------------------------
+함수
+select to_char(sysdate) from dual;
+( 테이블의 to _char 값을 함수를 이용하여 출력하라  (table 이름)
+
+* sysdate,'yyyy-mm-dd'
+* yyyy-mm-dd HH:MI:ss
+* 프로시저 = system에서 제공한 함수가 아닌 사용자가 지정한 함수
+
+------------------------------------------------------------------------
+함수 대입하기
+update student set input_date=to_char(sysdate,'yyyy-mm-dd HH:MI')
+where name='bale';
+---------------------------------------------------------------
+sum  avg 함수
+
+select avg(age) from student;
+
+select sum(age) from student;
+
+select name,age,sum(age) from student
+group by name,age;
+
+
+------------------------------------------------------------------
+중복제거
+
+select distinct age from student;
+
+-------------------------------------------------------------------
+Count 함수 -> row 의 개수
+
+select count(*) from student;
+
+-------------------------------------------------------------------
+
+* 그룹함수와 필드는 같이 나타낼 수 없다.
+
+* 같은 그룹일 때 avg와 sum을 알고 싶을 경우
+
+select studentno, avg(age),sum(age) from student
+group by studentno;
+
+--> studentno에서 동일한 값들의 평균과 합이 나타난다.
+
+
+-------------------------------------------------------------------
+
+select count(distinct age) from student
+
+--> 중복된 숫자를 제거하고 카운트
+
+update student set english=upper(english); -> 대문자
+                           lower           -> 소문자
+
+update student set english=initcap(english); -> 맨 첫 문자가 대문자로
+
+select english, length(english) from student; -> 문자 길이를 나타냄
+
+exp userid=java/111 file='d:\java.dmp
+
+<cmd 창에서>
+imp userid=system/Oracle102 owner=java
+file = 'd:\java.dmp'

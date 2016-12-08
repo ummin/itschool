@@ -1,0 +1,38 @@
+--------------JSP----------------------------------------------------------------------------------
+
+$('#confirm').click(function() {
+   			alert($('#id').val());
+   			$(location).attr('href',
+   		    'http://localhost:8081/yhoo2468/idconfirm?id='+$('#id').val()
+   		    +'&'+'password='+$('#id').val()		
+   			);
+   		 });
+
+
+---------------Controller----------------------------------------------------------------------------------
+
+@RequestMapping(value = "/idconfirm", method = RequestMethod.GET)
+	public String idconfirm( @RequestParam("id") String id, @RequestParam("password") String password) {
+		Member data = new Member();
+		data.setId(id);
+		data.setPassword(password);
+		System.out.println("------------->"+id);
+		System.out.println("------------->"+password);
+		return "member/member_insert";
+	}
+
+--------------ModelAttribute-------------------------------------------------------------------------------
+
+1.Bean의 이름 값과 텍스트필드의 이름값이 같은 것끼리만 모아온다.
+
+2.Set을 시키지 않아도 바로 값들을 불러 올 수 있다.
+
+3.Submit활용 시 매우 유용하다.
+
+@RequestMapping(value = "/memberInsert", method = RequestMethod.GET)
+	public String memberInsert(@ModelAttribute("member") Member member) {
+		System.out.println("----"+member.getId());
+		System.out.println("----"+member.getName());
+		System.out.println("----"+member.getPassword());
+		return "member/member_result";
+	}

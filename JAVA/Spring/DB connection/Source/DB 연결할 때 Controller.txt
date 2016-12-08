@@ -1,0 +1,25 @@
+@Controller
+public class HomeController {
+	@Autowired
+	private SqlSession sqlSession;
+	@Autowired
+	private Member member;
+
+@RequestMapping(value = "/idconfirm", method = RequestMethod.POST)
+	@ResponseBody
+	public void idconfirm (@RequestParam("id") String id) {
+		MemberDao dao = sqlSession.getMapper(MemberDao.class);
+		System.out.println("--------------<"+id);
+		try {
+			dao.selectOne(id);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return;
+	}
+	
+	@RequestMapping(value = "/board", method = RequestMethod.GET)
+	public String board(Locale locale, Model model) {
+		return "board";
+	}
+}

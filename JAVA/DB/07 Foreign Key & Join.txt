@@ -1,0 +1,44 @@
+update zipcode set
+addrold=concat( (concat (concat (concat (concat( (concat(sido,' '), gugun),' '), dongen),' '), jibunbeon);
+
+★ 별칭주기(테이블이 여러개일때 활용, Join 할 때 사용) ★
+select studentno,name from student A -> student를 A라는 별칭을 준다.
+where A.seq=1; -> student 의 seq를 물어본다.
+
+※student 테이블
+  student. < > -> student의 <>를 선언
+
+---테이블 연결하기 Foreign key--------------------------
+필드의 길이와 타입을 같게 해야 연결된다 , foreign 키를 지정해줄 키는 PK or UK 를  걸어줘야한다.
+ 
+create table student (code varchar(9) primary key, name varchar(20), idcard varchar(6), postno varchar(5),
+addr1 varchar(50), addr2 varchar(30), professor varchar(4), dept varchar(5));
+
+create table professor (code varchar(4) primary key, name varchar(20), labno varchar(10), subject varchar(6));
+
+create table subject ( code varchar(6) primary key, name varchar(20), grade number(1));
+
+create table register (seq number(9) primary key, input_date varchar(15), studentcode varchar(9), subject varchar(6), professor varchar(4), grade number(1));
+
+create table dept ( code varchar(5) primary key, name varchar(3));
+
+기초가 되는 테이블 부터 연결한다.
+
+
+alter table student add constraint stud_dept_fk foreign key(dept)
+references dept(code);
+
+alter table studnet drop constraint stud_dept_fk;
+
+-----------------------------------------------------------------------
+
+--<join>---------------------------------------------------------
+select A.code,A.name , B.code,B.name from
+student A, dept B where
+A.dept=B.code;
+
+select A.code,A.name, B.code, B.name, C.code,C.name
+from student A, dept B, professor C
+where A.dept=B.code and A.professor = C.code;
+
+select name, pay from employees where pay=(select max(pay) from employees);

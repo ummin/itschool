@@ -1,0 +1,14 @@
+--飘府芭 积己--
+create or replace trigger trg_02
+after insert on member
+referencing new as new
+            old as old  for each row
+begin
+   insert into salary(no,name) values(
+   : new, id,
+   : new, name);
+end:
+/
+
+--飘府芭 昏力---
+drop trigger trg_02

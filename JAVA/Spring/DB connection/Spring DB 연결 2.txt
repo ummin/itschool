@@ -1,0 +1,48 @@
+
+---POEM.XML 에 추가---------------------------------
+
+<!-- MyBatis -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+		<!-- MyBatis -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.2.8</version>
+		</dependency>
+
+----------springframework dependency 가 있는 곳 아래에 추가. 순서중요하다. 어긋나면 404 error
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>3.0.4.RELEASE</version>
+		</dependency>
+
+-----------appServlet/servlet-context.xml에 추가-------------------------
+
+<beans:bean name="dataSource"
+	class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<beans:property name = "driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+		<beans:property name = "url" value="jdbc:oracle:thin:@localhost:49244:XE"/>
+		<beans:property name = "username" value="itschool"/>
+		<beans:property name = "password" value="1234"/>
+	</beans:bean>
+	
+	<beans:bean id ="sqlSessionFactory"
+	class="org.mybatis.spring.SqlSessionFactoryBean">
+	<beans:property name = "dataSource" ref="dataSource"/>
+	<beans:property name = "mapperLocations" 
+	value="classpath:com/naver/sdu0920/mapper/*.xml"/>
+	</beans:bean>
+	
+	<beans:bean id ="sqlSession" 
+	class="org.mybatis.spring.SqlSessionTemplate">
+	<beans:constructor-arg index = "0" ref="sqlSessionFactory"></beans:constructor-arg>
+	</beans:bean>
+
+
+---------mapper패키지 -> Member.xml 생성, service 패키지->MemberDao 인터페이스 생성.--------------

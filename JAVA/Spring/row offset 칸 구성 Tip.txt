@@ -1,0 +1,7 @@
+             <div class= "row col-sm-6">
+	     	    <div class = "input-group col-sm-offset-4"> -->주소찾기,중복검사 등
+	     		<span class = "input-group-addon"><i class="fa fa-user"></i></span> --> addon 반드시 붙여야한다.
+	     		<input class="form-control" size="20" placeholder="id"/>
+	     	</div>
+	     		<div class = "input-group col-sm-offset-2">
+	     </div>

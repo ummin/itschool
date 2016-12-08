@@ -1,0 +1,22 @@
+아래를 넣을 경우 아래 주소를 인터넷 주소창에 검색해 css 파일을 전부 복사 후 
+아래 위치에 있는 예를들어 bootstrap.min.css 에 있는 파일들을 전부 지운후 복사한 내용을 붙여넣어 내용을 바꿔 저장한다.
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+
+------------------------- 아래만 넣어도 실행 될 경우 위는 넣을 필요가 없다. ------------------------------------
+
+<div class="dropdown">
+       <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+       <span class="caret"></span></button>
+       <ul class="dropdown-menu">
+       <li><a href="#">HTML</a></li>
+       <li><a href="#">CSS</a></li>
+       <li><a href="#">JavaScript</a></li>
+       </ul>
+</div>

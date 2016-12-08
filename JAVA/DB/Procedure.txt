@@ -1,0 +1,39 @@
+Oracle Procedure
+
+(함수(카운트 멕스 등) 을 내가 만들고 싶을떄)
+
+ed mem_insert
+
+-> 새로만들어진 메모장에 다음과 같이 입력
+create or replace procedure mem_insert1(parmid in varchar2,parname in varchar2) as
+begin
+insert into member(id,name) values(parmid,parname);
+commit;
+END MEM_INSERT1;
+/
+-> @ mem_insert (프로시저 생성) , show errors : 에러를 보여준다.
+
+CREATE OR REPLACE FUNCTION MEM_COUNT
+	RETURN NUMBER IS
+
+	CURSOR c1 IS
+		SELECT COUNT(*) FROM member;
+
+	RESU NUMBER(9);
+BEGIN
+	OPEN c1;
+	LOOP
+		FETCH c1 INTO RESU;
+		EXIT WHEN C1%NOTFOUND;
+		DBMS_OUTPUT.PUT_LINE('---->>' || RESU );
+	END LOOP;
+
+	CLOSE C1;
+
+	RETURN RESU;
+END;
+/	
+
+@ mem_count;
+
+select mem_count() from daul; -> daul 은 오라클에서 제공하는 기본 테이블

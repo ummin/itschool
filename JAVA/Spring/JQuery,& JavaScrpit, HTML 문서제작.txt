@@ -1,0 +1,55 @@
+HTML(기본문서는 기능이 아무것도 없다.) <- CSS (꾸며준다) , JavaScript(문서(HTML)제어) ->업글버전 JQuery
+
+화면은 Table로 구성 -> 그러나 해상도 지원이 부족 -> DIV(★),Media Query  등장.  
+
+p.510 JQuery, Java Script
+JQuery -> .js 파일
+
+JQuery 홈페이지에서 min,jsp 파일다운
+
+web-app 폴더 - resource 하위 폴더로 js 폴더 만들고 다운받은 파일들을 넣는다.
+
+view 폴더아래에 jquerytest 폴더생성하고 web- jsp 파일생성.
+
+에러가 잡기 힘들기 때문에 firefox 다운.
+
+firefox -> 부가기능 -> 확장기능 -> debug 검색해서 firebug설치
+
+window -> preference -> general ->web browser -> firefox 선택.
+
+---------------------------------------------------------------------------------------------
+jquerytest-> title 아래에 <script src="resources/js/jquery-3.1.1.js"></script> 입력 
+
+        $(document).ready(function() {       ----> 문서 전체 =  document ,즉 document 안에 있는 것들을 제어.
+		$('#test').click(function() { ---> # = ID, . = class 를 찾아 이벤트를 부여한다. 
+		alert();
+		});
+	});
+
+<div id="test">test...</div> 이런식으로 id를 줘서 이벤트를 줄 수 있다.
+
+----------------------------------------------------------------------------------------------
+Bootstraps 다운 압축 푼 후 폴더를 webapp/resources/이위치에 붙여넣기.
+
+ <script src="resources/bootstrap-3.3.7-dist/js/bootstrap.js"></script> 추가.
+
+class = 'row' -> 한줄 띄운다. , 두 레이아웃의 합 (col-sm-4, col-sm-8,Horizental)은 12 아래로는 가능하나 12이상은 되지 않는다. 
+※Vertical 은 row를 쓰면 된다. (Android weight sum 과 비슷한 기능).
+
+        <div class="container">
+		 <div class = "row">
+		 	<div class="col-sm-4">
+		 		<div class="demo-content">.col-sm-6</div>
+		 	</div>
+		 	 <div class="col-sm-8">
+		 	 	<div class="demo-content bg-alt">.col-sm-6</div>
+		 </div>
+	</div>
+
+스타일은 css파일로 따로 만들어서 넣는다. (bootstrap css폴더안에 만든다.)
+
+http://fontawesome.io/icons/ -> 쓸 수 있는 아이콘이 모여있다.
+
+화면컨트롤 : <DIV> <SPAN(div말고 줄것이 없을때 그냥 쓴다)> -> Class name으로 컨트롤한다. 
+offset은 안보이게한다 (gone과 비슷한 기능)
+

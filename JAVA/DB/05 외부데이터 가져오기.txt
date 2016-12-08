@@ -1,0 +1,72 @@
+create table zipcode(새우편번호 varchar(30),시도 varchar(200),
+시도영문 varchar(200),시군구 varchar(200),시군구영문 varchar(200),
+읍면 varchar(200),읍면영문 varchar(200),도로명코드 varchar(100),
+도로명 varchar(100),도로명영문 varchar(100),
+지하여부 varchar(100), 건물번호본번 varchar(50),
+건물번호부번 varchar(50),건물관리번호 varchar(100),
+다량배달처명 varchar(100), 시군구용건물명 varchar(200),
+법정동코드 varchar(100), 법정동명 varchar(100),
+리명 varchar(100), 행정동명 varchar(100),
+산여부 varchar(10),지번본번 varchar(100),
+읍면동일련번호 varchar(10), 지번부번 varchar(10),
+구우편번호 varchar(100));
+
+<ctl 파일 따로 csv파일들과 저장>
+load data infile '경기도.csv'
+apend into table zipcode
+fields terminated by ','
+(새우편번호,시도,시도영문,시군구,시군구영문,읍면영문 ,도로명코드,
+도로명,도로명영문,지하여부,건물번호본번 , 건물번호부번 ,
+건물관리번호,다량배달처명 ,시군구용건물명 ,법정동코드,법정동명,리명,
+행정동명,산여부,지번본번,읍면동일련번호,지번부번,구우편번호)
+
+<cmd 접속>
+cd \
+
+cd 폴더이름
+
+sqlldr java/비밀번호 control='zipcode.ctl' data='강원도.csv'
+
+파일 추가 할 때는 insert -> append 로 바꾼다. 지역명도 바꾼다.
+
+-> 필드이름 영어로 바꾸기.
+ ZIPCODE
+ SIDO
+ SIDOEN
+ GUGUN
+ GUGUNEN
+ DONG
+ DONGEN
+ ROADCODE
+ ROADNAME
+ ROADNAMEEN
+ GROUND
+ BUILDINGBON
+ BUILDINGNO
+ BUILDINGMGE
+ DARYNG
+ GUGUNBUILDING
+ LAWCODE
+ LAWNAME
+ LEENAME
+ ADMINDONG
+ MOUNTAINYN
+ JIBUNBEON
+ DONGSEQNO
+ JIBEONBUBEON
+ OLDZIPCODE
+
+select max(length(zipcode) ) from zipcode;
+
+select rownum from student;
+
+select studentno from student order by studentno asc(<->desc); (오름차순(내림차순)으로 정렬)
+
+select view from table where 조건;
+
+<index>
+create index student_idx on student(name);
+drop index student_idx;
+select index_name,table_name from user_indexes;
+
+

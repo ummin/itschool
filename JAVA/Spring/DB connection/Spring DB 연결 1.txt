@@ -1,0 +1,24 @@
+--cmd-------------
+
+lsnrctl
+
+lsnrctl stop
+
+lsnrctl start
+
+lsnrctl status
+
+----------db가 oracle express 인경우 xe 확인---
+
+C:\oraclexe\app\oracle\product\11.2.0\server\network\ADMIN-> listener.ora, tnsnames.ora 에서 xe확인
+
+url ->orcl 을 xe로 바꿔준다.
+
+---------------------------------------------
+
+작업관리시작 -> 서비스 탭 -> OracleServiceXE PID 번호 확인
+
+CMD -> netstart -nao -> PID 번호 확인 후 해당 로컬 주소 자리 확인 ( ex 0.0.0.0:49244 ) -> 49244 를 
+
+ConnectManager url localhost 에 붙여준다.
+

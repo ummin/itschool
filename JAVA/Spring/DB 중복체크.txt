@@ -1,0 +1,118 @@
+------------------memberinsert------------------------------
+$(document).ready(function(){
+		$('#photo').change(function(event){
+			var tmppath = URL.createObjectURL(event.target.files[0]);
+			alert($(this).val());
+			$('#image').attr('src',tmppath);
+		});
+
+		$('#save').click(function(){
+			if($('#confirm_chk').val()=='no'){
+				alert("ID 중복체크를 하시오");
+				return;
+			}
+			$('#insert_form').submit();
+		});
+		
+		
+		$('#confirm').click(function(){
+			var id = $('#id').val();
+			if(id == ""){
+				alert("ID를 입력하시오.");
+				return;
+			}
+					
+				$.ajax({
+				type : 'POST',
+				data:"id="+id,
+				dataType : 'json',
+				url : 'idconfirm',
+				success : function(data){
+					if(data==0){
+						alert("사용가능한 ID 입니다.");
+						$('#confirm_chk').attr('value','yes');
+					}else {
+							alert("ID 중복입니다.");
+						}
+						return false;
+				}
+			});
+			
+		});
+		
+	});
+
+
+<form id = "insert_form" name = "insert_form" class="form-horizontal" action="memberInsert" 
+<input type ="hidden" id = "confirm_chk" name ="confirm_chk" value ="no" />
+<button name="save"class="btn btn-default" id="save" type="button">Save</button>
+
+
+----------DAO-------------------------------------------------------------------------------------------
+
+package com.naver.sdu0920.service;
+
+import com.naver.sdu0920.entities.Member;
+
+public interface MemberDao {
+	
+	public int selectCount( String id );
+	
+}
+---------------XML---------------------------------------------------------------------------------
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org.//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="com.naver.sdu0920.service.MemberDao">
+	
+	<resultMap type="com.naver.sdu0920.entities.Member" id="memberMap">
+		<id property="id"          column="id"/>
+		<id property="name"        column="name"/>
+		<id property="password"    column="password"/>
+		<id property="phone1"      column="phone1"/>
+		<id property="phone2"      column="phone2"/>
+		<id property="phone3"      column="phone3"/>
+		<id property="email"       column="email"/>
+		<id property="cardno"      column="cardno"/>
+		<id property="job"         column="job"/>
+		<id property="memberlevel" column="memberlevel"/>
+		<id property="photo"       column="photo"/>
+		<id property="zipcode"     column="zipcode"/>
+		<id property="inputdate"   column="inputdate"/>
+		<id property="addr1"       column="addr1"/>
+		<id property="addr2"       column="addr2"/>
+	</resultMap>
+	
+		
+		<select id="selectCount" parameterType="String" resultType = "int">
+			select count(*) from member where id=#{id}
+		</select>
+		
+	</mapper>
+
+
+
+
+
+
+--------------Controller---------------------------------------------------------------------------
+@RequestMapping(value = "/idconfirm", method = RequestMethod.POST)
+	@ResponseBody
+	public int idconfirm (@RequestParam("id") String id) {
+		int count = 0;
+		int find = 0;
+		try {
+			MemberDao dao = sqlSession.getMapper(MemberDao.class);
+			count = dao.selectCount(id);
+		}
+			catch (Exception e) {
+		}
+		if ( count >  0) {
+			find = 1;
+		}
+		else
+			find = 0;
+		return find;
+	}

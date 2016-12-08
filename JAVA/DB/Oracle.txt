@@ -1,0 +1,38 @@
+DB - Oracle, MySql, MsSQL
+
+Sys(최고신-oracle 키고끄는 기능 가능 system은 못함), System(신) (계정연결)-> Account(user) 
+
+MySql = DB 를 여러개 만든다.
+        계정부터접근 ( 어느 DB 를 쓸지 선택 )
+
+Oracle = 하나의 DB에 여러개의 Table Space ( MySql의 여러개의 DB와 유사 ) 를 사용
+
+1. 계정 연결 (로그인)
+
+Connect sys/비밀번호 -> Connect sys/비밀번호 as sysdba (계정연결)
+
+2. 계정 생성
+
+create user 아이디 identified by 1234;
+
+3. 권한부여
+
+grant resource,connect to 아이디;
+ 
+*grant -> user 에 resouce(DML,DDL,DCL 권한) ,connect 권한 부여
+
+4. Tablespace 생성
+
+ - tablespace 는 기본이 500M , 500M 를 초과 할 경우 최소 100M ~ 1GB 까지 사이즈를 늘릴 수 있게 설정. -
+ 
+create tablespace itschooltsp datafile 'd:\util\oracle\itschooltsp.dbf'
+size 500m autoextend on next 100m maxsize 1000m;
+
+
+5. User에 Tablespace 지정
+
+alter user 아이디 default tablespace tablespace이름;
+
+
+6. alter 
+desc (select) add(insert) modify(update) drop(delete)

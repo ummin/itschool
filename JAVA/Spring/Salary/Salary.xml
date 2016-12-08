@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org.//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="com.naver.sdu0920.service.SalaryDao">
+	
+	<resultMap type="com.naver.sdu0920.entities.Salary" id="salaryMap">
+		<id property="no"              column="no"/>
+		<id property="name"            column="name"/>
+		<id property="dept"   	       column="dept"/>
+		<id property="partner"         column="partner"/>
+		<id property="dependent20"     column="dependent20"/>
+		<id property="dependent60"     column="dependent60"/>
+		<id property="base"            column="base"/>
+		<id property="extrapay1"       column="extrapay1"/>
+		<id property="extrapay2"       column="extrapay2"/>
+		<id property="insurance"       column="insurance"/>
+	</resultMap>
+
+	<resultMap type="com.naver.sdu0920.entities.SalaryRollup" id="salaryRollupMap">
+		<id property="yyyymm"		   column="yyyymm"			/>
+		<id property="no"              column="no"/>
+		<id property="name"            column="name"/>
+		<id property="dept"   	       column="dept"/>
+		<id property="partner"         column="partner"/>
+		<id property="dependent20"     column="dependent20"/>
+		<id property="dependent60"     column="dependent60"/>
+		<id property="amount"          column="amount"/>
+		<id property="insurance"       column="insurance"/>
+		<id property="decisiontax"     column="decisiontax"/>
+	</resultMap>
+		
+		<insert id="updateRow" parameterType="hashMap">
+			update salary set name=#{name}, dept=#{dept}, partner=#{partner}
+			,dependent20=#{dependent20},dependent60=#{dependent60},base=#{base},
+			extrapay1=#{extrapay1} ,extrapay2=#{extrapay2}, insurance=#{insurance} where no=#{no}
+		</insert>
+		
+		<insert id="insertRow" parameterType="hashMap">
+			insert into salary (no,name,dept,partner,dependent20,dependent60,base,extrapay1,extrapay2,insurance) 
+			values (#{no},#{name},#{dept},#{partner},#{dependent20},#{dependent60},#{base},#{extrapay1},#{extrapay2}, #{insurance})
+		</insert>
+		
+		<insert id="insertRollRow" parameterType="java.util.List">
+			INSERT ALL
+			<foreach collection="list" item="element" index = "index">
+			into salaryroll (yyyymm,no,amount,amount12,income,incometax,humandeduct,special,
+			standard,calculatetax,incometaxdeduct,decisiontax12,decisiontax,insurance) 
+			values
+			(#{element.yyyymm},#{element.no},#{element.amount},#{element.amount12},#{element.income},#{element.incometax},
+			#{element.humandeduct},#{element.special},#{element.standard},#{element.calculatetax},
+			#{element.incometaxdeduct},#{element.decisiontax12},#{element.decisiontax},#{element.insurance})
+			</foreach>
+			SELECT * FROM dual
+		</insert>
+		
+		<delete id="deleteRow" parameterType="String" >
+			delete from salary where no = #{no}
+		</delete>
+		
+		<delete id="deleteRollRow" parameterType="String" >
+			delete from salaryroll where yyyymm = #{yyyymm}
+		</delete>
+		
+		<select id="selectCount" parameterType="String" resultType = "int">
+			select count(*) from salary where no=#{no}
+		</select>
+		
+		<select id="selectAll"  resultMap="salaryMap">
+			select * from 
+			(select rownum numrow, A.* from 
+			(select * from salary 
+			order by no desc) A)
+			where numrow >0 and numrow <![CDATA[<=]]> 10
+		</select>
+		
+		<select id="selectOne" resultMap="salaryMap">
+			select * from salary where no = #{no}
+		</select>
+
+		<select id="salaryRollup" parameterType="String" resultMap="salaryRollupMap">
+			select yyyymm,A.no no,dept,name,partner,dependent20,dependent60,
+			sum(amount) as amount,sum(B.insurance) as insurance,sum(decisiontax) as decisiontax,
+			sum(amount - B.insurance - decisiontax) as receipt
+			from salary A, salaryroll B where A.no = B.no and B.yyyymm = #{yyyymm}
+			group by rollup(A.dept, (B.yyyymm,A.no,A.dept,A.name,A.partner,A.dependent20,A.dependent60) )
+		</select>
+	</mapper>

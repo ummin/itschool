@@ -1,0 +1,52 @@
+1. idea 생성 후 권한 부여하기 ----------------------------------------
+create user java identified by 1234;
+ 
+<system 접속>
+grant resource,connect to java;
+ 
+*grant -> user 에 resouce ,connect 권한 부여
+ 
+drop user java; * id 삭제
+ 
+* cl scr 화면 지우기
+ -----------------------------------------------------------------------
+
+
+2. tabe space  -------------------------------------------------------
+(1) table space 생성
+create tablespace ts_test datafile 'd:/ts_test.dbf'
+size 50m autoextend on
+extent management local autoallocate; -> extent 관리 지정
+ 
+ <table space 삭제>
+drop tablespace ts_test
+including contents and datafiles
+cascade constraints; -> 제약 조건에 상관없이 지워라
+ 
+ <생성된 유저 목록 확인>
+select *from all_users;
+ 
+(2)user에 tablespace 보내기>
+alter user java default tablespace ts_test;
+ 
+ <생성된 talbespace 확인하기>
+select tablespace_name from dba_tablespaces; --> dba 가 붙는것은 system 유저만 사용
+ 
+ <Tablespace의 free 공간 확인>
+select *from dba_free_space;
+ 
+ <tablespace 의 기본값들을 나타내라> 
+ select username,default_tablespace --> 입력한 순서대로 출력된다.
+ from dba_users;
+ 
+-----------------------------------------------------------------------
+
+3.table 생성------------------------------------------------------------
+create table student ( id varchar2(16), name varchar(20));
+ 
+desc student; 테이블 구조 확인 -->desc (description)
+ 
+<Field 삽입&삭제>
+alter table student add name varchar2(16);
+alter table student drop column ID;
+-------------------------------------------------------------------------

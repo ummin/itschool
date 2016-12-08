@@ -1,0 +1,25 @@
+C:\>sqlplus /nolog
+SQL*Plus: Release 10.2.0.1.0 - Production on Mon Apr 23 21:07:44 2007
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+SQL> conn sys/비밀번호@호스트 as sysdba
+Connected.
+SQL> 
+정상적으로 connecting이 되었는지 확인한다.
+ 
+SQL> show user;
+USER is "SYS" (또는 "SYSTEM")
+SQL> 
+SQL>SELECT USERNAME, ACCOUNT_STATUS,
+                     TO_CHAR(LOCK_DATE, 'YYYY-MM-DD HH24:MI') LOCK_DATE, PROFILE
+          FROM DBA_USERS;
+ 
+위와 같이 SELECT를 해보면 계정들의 상태를 확인 할 수 있다. (OPEN, LOCKED, EXPIRED & LOCKED)
+ 
+SYSTEM계정의 잠금해제는
+
+SQL> ALTER USER SYSTEM ACCOUNT UNLOCK;
+
+정상적으로 update되었다면 system계정의 lock down은 풀렸을 것이다.
+일반계정의 Lock상태를 푸는 것도 동일하므로 참고하기 바란다.
+[출처] SYSTEM계정 ORA-28000: the account is locked!|작성자 구름진

@@ -1,0 +1,6 @@
+JAVA Type
+
+primitive type = int, Byte, double, boolean
+
+reference type = ArrayList, class µî
+

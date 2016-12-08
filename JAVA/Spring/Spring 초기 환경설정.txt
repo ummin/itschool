@@ -1,0 +1,100 @@
+Spring : 강력하게 값들을 보내고 받아 올 수 있다.(이름만 맞으면) 환경설정
+
+window - preferrence
+
+1.검색창에 encoding 검색
+
+모두 UTF-8 설정
+
+(Content Types -> text 선택 -> Default 값 : UTF-8 직접입력 )
+
+2.검색창에 actoin 검색
+
+Java - Editor - Save Actions - Perform the selected actions on save 선택
+
+
+
+★  Java - Class -> Library -> jar 파일로 압축해서 제공.
+                    Dependices -> Poem 파일로 연결해서 제공. (제일먼저실행)
+
+XML -> 형식 정해져있지 않다. <a> </a> 이런식으로 이름을 열고 닫고 형식만 맞으면 가능.
+<ab> ~ </ab> : Body 가 있는 tag : 안에 내용이 있다.
+<ab /> : Body 가 없는 tag : 안에 내용이 없다.
+
+
+poem.xml -> dependcies (Maven) : 최신 jar 파일을 자동으로 다운받아서 넣는다. ( 먼저 Maven Dependencies 안에 있는지 검사 후
+ 					없으면 인터넷에서 다운받아온다.) 
+-->     <version>${org.springframework-version}</version> : 버전을 알 수 있다.
+
+
+※ojdbc.jar(Oracle 연결해주는 파일) 파일 poem.xml 로 추가하기.※ ( Build Path로도 가능하다. )
+<repositories>
+		<repository>
+			<id>oracle</id>
+			<name>ORACLE JDBC Repository</name>
+			<url>http://maven.jahia.org/maven2</url>
+		</repository>
+	</repositories>
+	<dependencies>
+	<!-- Oracle -->
+	<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>11.1.0.7.0</version>
+		</dependency>
+-> Maven Dependencies 에 ojdbc6.jar 파일이 생성 됨을 확인.
+
+★ Src 폴더 구간 -> JSP 구간 ★
+Web Server 종류 
+.Apache(PHP 사용, JSP 사용) - Tomcat
+.Tomcat(JSP 사용)
+.Weblogic(대기업에서 사용)
+.JBoss 등
+
+webapp - root - resources (외부 이미지, 기타 등등 들어감. 다른위치에 있으면 접근을 막음.)
+              - (Web INF 는 폴더 인정 X) - views ( Base Package 위치 지정 ) -> Web.xml 실행
+              
+
+※ Server 실행 -> 한글파일변환 ※
+Web.xml에
+<filter>
+        <filter-name>CharacterEncodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+        	<param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+        	<param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>CharacterEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+추가 후 실행-> F5 새로고침 하면 바뀐다.
+
+실행 순서 :  Poem -> Web
+
+<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring/root-context.xml</param-value> 위치를 나타냄.
+	</context-param>
+
+        <servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+servlet - content.xml -> prefix : jsp파일 위치 , suffix : 확장자.
+Home.jsp : main 
+Home controller 자동적으로 실행
+return "home" -> Home.jsp 실행
+
+booth trab : html 편리한 화면 구성 (= Andorid weight 과 비슷함.)

@@ -1,0 +1,46 @@
+poem 에 properties 안에 추가
+<jackson.version>1.9.1</jackson.version>
+
+
+dependcies 안에 추가.
+<!-- Jackson JSON Mapper -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+
+
+Controller--------------------------------------------------------------------------------
+
+	@RequestMapping(value = "/idconfirm", method = RequestMethod.POST)
+	public @ResponseBody int json(@RequestParam("id") String id, HttpServletResponse response) throws Exception {
+		System.out.println("------------->"+id);
+		response.setContentType("application/json");
+		response.setContentType("text/xml;charset=utf-8");
+		response.setHeader("Cache-Control", "no-cache");
+		return 0;
+	}
+ ResponseBody 자동적으로 json 값으로 바꿔서 값을 보냄.
+
+Member_insert---------------------------------------------------------------------------------------
+ 
+$('#confirm').click(function() {
+   			var id = $('#id').val();
+   			
+   			$.ajax({
+   				type :'POST',
+   				data :"id="+ id,
+   				dataType : 'json',
+   				url : 'idconfirm',
+   				success : function(data) {
+   					alert(data);
+   					if(data==0){
+   						alert("존재하지 않는 ID 입니다.");
+   						return false;	
+   					 }
+   					}
+   			      });
+
+json값으로 바뀐 값을 data로 받음. 

@@ -1,0 +1,24 @@
+.div-bgcolor-red{
+	    font-family:cursive;
+ 		background: #ff0000;
+ 	}
+.div-bgcolor-green{
+	    font-family:cursive;
+ 		background: #00ff00;
+ 	}
+.div-bgcolor-blue{
+		font-family:fantasy;
+ 		font-size:50px;
+ 	}
+.div-bgcolor-white{
+ 		background: #ffffff;
+ 		font-size:50px;
+ 	}
+.div-bgcolor-black{
+ 		background: #000000;
+ 	}
+.div-headerstyle{
+font-size:50px; 
+font-style:impact;
+background: #000000;
+}

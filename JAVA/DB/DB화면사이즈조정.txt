@@ -1,0 +1,2 @@
+col Δ®·³Έν format a10;
+set linesize Ε©±β;

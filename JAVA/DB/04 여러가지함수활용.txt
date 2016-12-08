@@ -1,0 +1,30 @@
+select *from student; <---> select name,age from student;
+  Result set(부하가 많아진다)  (꼭 필요한 데이터만 부르기)
+
+※ 틈나는대로 교재 읽기
+
+select substr(english,1,3) from student;
+
+※함수 ( 함수) 사용 
+select substr(english,2,length(english)) from student;
+
+※(english) 출력 문제
+select concat(name, concat('(',concat(english,')'))) from student;
+
+※ english 3번째 단어만 대문자로 바꾸기
+select concat(substr(english,1,2),initcap(substr(english,3,10))) from student;
+
+※ replace 함수
+update student set english=replace(english,' ' ,'');
+
+select replace(temp,'o','kkk') from student;
+
+※ max, min 함수
+select max(age) from student;
+       min(age)
+
+※ mod 함수
+select mod(age, 2) from student;
+
+create table zipcode ( zipcode varchar(30), sido varchar(200), sidoen varchar(200), gugun varchar(200), dong varchar2(200), dongen varchar2(200),
+bunji varchar2(200), bunjien varchar2(200), seq number(5));

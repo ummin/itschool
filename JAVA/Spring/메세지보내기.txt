@@ -1,0 +1,24 @@
+---------controller------------------------------------------------------------------------
+	
+@RequestMapping(value = "/memberInsert", method = RequestMethod.POST)
+	public ModelAndView memberInsert(@ModelAttribute("member") Member member) {
+		MemberDao dao = sqlSession.getMapper(MemberDao.class);
+		int result = dao.insertRow(member);
+		
+		String msg = "";
+		if (result == 1 ){
+			msg = "success Insert your data";
+		} else {
+			msg = "failed Insert your data";
+		}
+		
+		ModelAndView mav = new ModelAndView("member/member_result");
+		mav.addObject("msg",msg);
+//		mav.addObject("content", "member/member_result");
+		
+		return mav;
+	}
+
+
+-----------------jsp-----------------------------------------------
+<div class ="col-md-offset-4 col-md-4 resultMessage">${msg}</div>

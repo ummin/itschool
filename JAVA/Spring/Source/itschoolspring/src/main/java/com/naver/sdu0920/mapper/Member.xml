@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org.//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="com.naver.sdu0920.service.MemberDao">
+	
+	<resultMap type="com.naver.sdu0920.entities.Member" id="memberMap">
+		<id property="id"          column="id"/>
+		<id property="name"        column="name"/>
+		<id property="password"    column="password"/>
+		<id property="phone1"      column="phone1"/>
+		<id property="phone2"      column="phone2"/>
+		<id property="phone3"      column="phone3"/>
+		<id property="email1"      column="email"/>
+		<id property="cardno"      column="cardno"/>
+		<id property="job"         column="job"/>
+		<id property="memberlevel" column="memberlevel"/>
+		<id property="photo"       column="photo"/>
+		<id property="zipcode"     column="zipcode"/>
+		<id property="inputdate"   column="inputdate"/>
+		<id property="addr1"       column="addr1"/>
+		<id property="addr2"       column="addr2"/>
+	</resultMap>
+	
+		<select id="selectOne" parameterType="String" resultMap="memberMap">
+			select * from member where id=#{id}
+		</select>
+		
+		<select id="selectAll"  resultMap="memberMap">
+			select * from member 
+		</select>
+		
+		<select id="selectCount" parameterType="String" resultType = "int">
+			select count(*) from member where id=#{id}
+		</select>
+		
+		<delete id="deleteRow" parameterType="String" >
+			delete from member where id = #{id}
+		</delete>
+		
+		<insert id="insertRow" parameterType="hashMap">
+			insert into member (id,name,password,phone1,phone2,phone3,photo) 
+			values ( #{id},#{name},#{password},#{phone1},#{phone2},#{phone3},#{photo})
+		</insert>
+		
+		<insert id="updateRow" parameterType="hashMap">
+			update member set name = #{name}, password = #{password}, phone1 = #{phone1},
+			phone2 = #{phone2}, phone3 = #{phone3} where id = #{id}
+		</insert>
+	</mapper>

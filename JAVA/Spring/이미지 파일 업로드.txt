@@ -1,0 +1,63 @@
+---------Image 띄우기----------------------------------------------------------------
+	
+		$('#photo').change(function(event) {
+			var tmppath = URL.createObjectURL(event.target.files[0]);
+			alert($(this).val());
+			$('#image').attr('src', tmppath);
+		});
+
+	<input type="file" id="photo" name="imgfile">
+
+--------------------------------------------------------------------------------------
+
+----DB에 이미지 업로드하기 --------------------------------------------------------
+		
+1. Pom.xml 에 추가
+		<!-- file upload -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.3</version>
+		</dependency>
+
+2. root-context.xml 에 추가
+
+	<bean id="multipartResolver"
+	class = "org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="100000000"></property>
+		<property name="maxInMemorySize" value="100000000"></property>
+	</bean>
+
+3. Contorller 추가.
+
+	@RequestMapping(value = "/memberInsert", method = RequestMethod.POST)
+	public ModelAndView memberInsert(@ModelAttribute("member") Member member) {
+		ModelAndView mav = new ModelAndView("member/member_result");
+		MemberDao dao = sqlSession.getMapper(MemberDao.class);
+		
+		try {
+			member.setPhoto(member.getImgfile().getBytes());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		int result = dao.insertRow(member);
+		
+		String msg = "";
+		if (result == 1 ){
+			msg = "success Insert your data";
+		} else {
+			msg = "failed Insert your data";
+		}
+		
+		
+		mav.addObject("msg",msg);
+		mav.addObject("result", "ok");
+		
+		return mav;
+	}
